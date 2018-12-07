@@ -2,18 +2,29 @@
 <html>
 
 <body>
-
-    <h1>JavaScript Clouse and Event Listener</h1>
-    <p>Printing each element of array and it should alert the value of element when cliked on the element.</p>
-    <div id="elements"></div>
-
+    <div style="text-align: center">
+        <h1>JavaScript Clouse and Event Listener</h1>
+        <p>Printing each element of array and it should alert the value of element when cliked on the element.</p>
+        <div id="elements"></div>
+    </div>
     <script>
+        // Array of numbers
         let numbers = [1, 2, 3, 4, 5, 6, 7];
+        // Create an ul elemnt
         let elem = document.createElement('ul');
+        elem.style.listStyle = 'none';
+        // iterate loop for each element
         numbers.forEach((num) => {
+            // Create child element li
             var liChild = document.createElement('li');
             liChild.innerHTML = num;
-
+            liChild.style.cursor = 'pointer';
+            liChild.style.width = '100px';
+            liChild.style.backgroundColor = '#555';
+            liChild.style.margin = '5px auto';
+            liChild.style.color = '#fff';
+            // Add eventListener 'Click'
+            // Here closure comes into play
             liChild.addEventListener('click', ((numVal) => {
                 return function() {
                     alert(numVal);
