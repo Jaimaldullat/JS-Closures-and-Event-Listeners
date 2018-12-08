@@ -77,7 +77,7 @@
         optionElem.setAttribute('value', '');
         selectElem.appendChild(optionElem); // Append option to select element
 
-
+        // iterate each cat
         cats.forEach((cat) => {
             let optionElem = document.createElement('option');
             optionElem.innerHTML = cat.name;
@@ -87,33 +87,55 @@
         });
 
 
-
+        // Onchange f=of cat from dropdown
         selectElem.addEventListener('change', () => {
+
+            let mainDiv = document.getElementById('result');
             if (selectElem.value !== '') {
 
                 // Search cat from array of cats
-                function searchValue(name, array) {
-                    array.forEach((elem) => {
-                        if (elem.name === name) {
-                            return elem.name;
-                        }
-                    });
-                };
-
                 let catDetails = cats.filter(obj => {
                     return obj.name === selectElem.value;
                 });
-                let mainDiv = document.getElementById('result');
+
+                // Get and add some new elemnts
 
                 let resultDiv = document.createElement('div');
+
+                // Cat Name
                 let h2Elem = document.createElement('H1');
                 let h2TextNode = document.createTextNode(catDetails[0].name);
                 h2Elem.appendChild(h2TextNode);
-
                 resultDiv.appendChild(h2Elem);
 
+                // Image
+                let imgElem = document.createElement('img');
+                imgElem.setAttribute('src', catDetails[0].picture);
+                imgElem.style.width = '100px';
+                imgElem.style.height = '100px';
+
+                // Add event listener on image click
+                imgElem.addEventListener('click', () => {
+                    catDetails[0].clicks += 1;
+                    let counerP = document.getElementById('click-count');
+                    counerP.innerHTML = 'Clicks count: ' + catDetails[0].clicks;
+                });
+
+                resultDiv.appendChild(imgElem);
+
+
+
+                // Counts
+                let pElem = document.createElement('p');
+                pElem.innerHTML = 'Clicks count: ' + catDetails[0].clicks;
+                pElem.setAttribute('id', 'click-count');
+                resultDiv.appendChild(pElem);
+
+                mainDiv.innerHTML = '';
                 mainDiv.appendChild(resultDiv);
 
+            } else {
+                mainDiv.innerHTML = '';
             }
         });
 
