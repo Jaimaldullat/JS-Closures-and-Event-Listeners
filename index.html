@@ -2,12 +2,21 @@
 <html>
 
 <body>
-    <div style="text-align: center">
-        <h1>JavaScript Clouse and Event Listener</h1>
+    <h1 style="text-align: center">JavaScript Clouse and Event Listener</h1>
+    <div style="width: 50%; text-align: center; float: left">
+
         <p>Printing each element of array and it should alert the value of element when cliked on the element.</p>
         <div id="elements"></div>
     </div>
+    <div style="text-align: center; width: 50%; float: left;">
+        <p>Select a cat from list</p>
+        <div id="multiple-cats">
+            <div id="result"></div>
+        </div>
+    </div>
     <script>
+        // Single Cat
+
         // Array of numbers
         let numbers = [1, 2, 3, 4, 5, 6, 7];
         // Create an ul elemnt
@@ -36,6 +45,79 @@
         });
         let div = document.getElementById('elements');
         div.appendChild(elem);
+
+
+
+        // Multiple Cats
+
+        // Array of multiple cats
+        let cats = [{
+                name: 'Cat1',
+                picture: 'cat1.jpg',
+                clicks: 0
+            },
+            {
+                name: 'Cat2',
+                picture: 'cat2.jpg',
+                clicks: 0
+            }, {
+                name: 'Cat3',
+                picture: 'cat3.jpg',
+                clicks: 0
+            }
+        ];
+
+        // Get Main Div
+        let divMultiCat = document.getElementById('multiple-cats');
+        // Create Select element
+        let selectElem = document.createElement('select');
+        // Create static option
+        let optionElem = document.createElement('option');
+        optionElem.innerHTML = "Select Cat";
+        optionElem.setAttribute('value', '');
+        selectElem.appendChild(optionElem); // Append option to select element
+
+
+        cats.forEach((cat) => {
+            let optionElem = document.createElement('option');
+            optionElem.innerHTML = cat.name;
+            optionElem.setAttribute('value', cat.name);
+
+            selectElem.appendChild(optionElem);
+        });
+
+
+
+        selectElem.addEventListener('change', () => {
+            if (selectElem.value !== '') {
+
+                // Search cat from array of cats
+                function searchValue(name, array) {
+                    array.forEach((elem) => {
+                        if (elem.name === name) {
+                            return elem.name;
+                        }
+                    });
+                };
+
+                let catDetails = cats.filter(obj => {
+                    return obj.name === selectElem.value;
+                });
+                let mainDiv = document.getElementById('result');
+
+                let resultDiv = document.createElement('div');
+                let h2Elem = document.createElement('H1');
+                let h2TextNode = document.createTextNode(catDetails[0].name);
+                h2Elem.appendChild(h2TextNode);
+
+                resultDiv.appendChild(h2Elem);
+
+                mainDiv.appendChild(resultDiv);
+
+            }
+        });
+
+        divMultiCat.prepend(selectElem);
 
     </script>
 </body>
